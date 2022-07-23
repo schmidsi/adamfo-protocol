@@ -1,18 +1,51 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
+import fs from "fs";
 import { ethers } from "hardhat";
 
+const NETWORK_MAP: { [key: string]: string } = {
+  maticmum: "mumbai",
+  unknown: "localhost",
+  homestead: "mainnet",
+};
+
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const { name } = await ethers.provider.getNetwork();
 
-  const lockedAmount = ethers.utils.parseEther("1");
+  const chainName: string = NETWORK_MAP[name] || name;
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const AdamfoProtocol = await ethers.getContractFactory("AdamfoProtocol");
+  const instance = await AdamfoProtocol.deploy();
 
-  await lock.deployed();
+  const addresses = fs.readFileSync(`./networks.json`).toString();
 
-  console.log("Lock with 1 ETH deployed to:", lock.address);
+  const newAddresses = {
+    ...JSON.parse(addresses),
+    [chainName]: {
+      AdamfoProtocol: {
+        address: instance.address,
+        startBlock: instance.deployTransaction.blockNumber,
+      },
+    },
+  };
+
+  fs.writeFileSync(`./networks.json`, JSON.stringify(newAddresses, null, 2));
+  // fs.writeFileSync(
+  //   `../subgraph/networks.json`,
+  //   JSON.stringify(newAddresses, null, 2)
+  // );
+  // fs.writeFileSync(
+  //   `../frontend/networks.json`,
+  //   JSON.stringify(newAddresses, null, 2)
+  // );
+
+  console.log(
+    "AdamfoProtocol deployed to:",
+    instance.address,
+    "on network:",
+    chainName,
+    "in block:",
+    instance.deployTransaction.blockNumber
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

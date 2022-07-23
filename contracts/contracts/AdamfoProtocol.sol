@@ -30,8 +30,6 @@ contract AdamfoPool is ERC1155 {
         string description
     );
 
-    // The rest are NFTs
-
     constructor(address[] memory members, uint poolId)
         ERC1155(
             string(
