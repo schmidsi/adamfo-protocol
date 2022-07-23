@@ -9,8 +9,7 @@ import "hardhat/console.sol";
 contract AdamfoProtocol is ERC1155 {
     uint256 public constant MEMBER_TOKEN = 0;
     uint256 public constant CREDIT = 1;
-
-    mapping(address => uint256) public dept;
+    uint256 public constant DEPT = 2;
 
     event RegisterExpense(
         address lender,
@@ -39,9 +38,10 @@ contract AdamfoProtocol is ERC1155 {
         require(participants.length >= 1, "Participants must be at least one");
 
         // TODO: Check if this is an unsafe math operation
-        uint256 deptPerBorrower = amount / participants.length;
+        uint256 deptPerParticipant = amount / participants.length;
         uint256 remainingDept = 0;
         uint256 creditOfParticipant = 0;
+        uint256 deptOfPayer = balanceOf(payer, DEPT);
 
         for (uint i = 0; i < participants.length; i++) {
             require(
@@ -52,15 +52,26 @@ contract AdamfoProtocol is ERC1155 {
             if (participants[i] != payer) {
                 creditOfParticipant = balanceOf(participants[i], CREDIT);
 
-                if (deptPerBorrower >= creditOfParticipant) {
-                    remainingDept = deptPerBorrower - creditOfParticipant;
+                if (deptPerParticipant >= creditOfParticipant) {
+                    remainingDept = deptPerParticipant - creditOfParticipant;
                     _burn(participants[i], CREDIT, creditOfParticipant);
-                    _mint(payer, CREDIT, remainingDept, "");
-                    dept[participants[i]] =
-                        dept[participants[i]] +
-                        remainingDept;
+                    _mint(participants[i], DEPT, remainingDept, "");
+
+                    deptOfPayer = balanceOf(payer, DEPT);
+
+                    // console.log("Dept of {}: ",)
+
+                    if (deptOfPayer == 0) {
+                        _mint(payer, CREDIT, remainingDept, "");
+                    } else if (deptOfPayer < remainingDept) {
+                        _burn(payer, DEPT, deptOfPayer);
+                        _mint(payer, CREDIT, remainingDept - deptOfPayer, "");
+                    } else {
+                        _burn(payer, DEPT, creditOfParticipant);
+                    }
                 } else {
-                    _burn(participants[i], CREDIT, deptPerBorrower);
+                    _burn(participants[i], CREDIT, deptPerParticipant);
+                    _burn(payer, DEPT, deptPerParticipant);
                 }
             }
         }
@@ -71,6 +82,8 @@ contract AdamfoProtocol is ERC1155 {
     function payBack(address member) public payable {
         require(balanceOf(member, MEMBER_TOKEN) >= 1, "Must be (for) a member");
         require(msg.value > 0, "Must pay back debt");
-        dept[member] = dept[member] - msg.value;
+        // Possible extension: Overpay
+        require(msg.value <= balanceOf(member, DEPT), "Cannot overpay");
+        _burn(member, DEPT, msg.value);
     }
 }

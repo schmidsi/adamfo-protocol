@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { AdamfoProtocol } from "../typechain-types";
 
-describe("AdamfoProtocol", function () {
+describe("AdamfoProtocol walkthrough", function () {
   let alice: SignerWithAddress,
     bob: SignerWithAddress,
     charly: SignerWithAddress;
@@ -26,15 +26,59 @@ describe("AdamfoProtocol", function () {
     // return { protocol, owner, other };
   });
 
-  it("Register dept", async () => {
+  it("Alice expense", async () => {
     await protocol.registerExpense(
       alice.address,
       [alice.address, bob.address, charly.address],
-      9,
+      300,
       "Dinner"
     );
-    expect(await protocol.balanceOf(alice.address, 1)).to.equal("6");
-    // expect(await protocol.balanceOf(alice.address, 1)).to.equal("6");
-    // expect(await protocol.balanceOf(alice.address, 1)).to.equal("6");
+    expect(await protocol.balanceOf(alice.address, 1)).to.equal("200");
+    expect(await protocol.balanceOf(bob.address, 2)).to.equal("100");
+    expect(await protocol.balanceOf(charly.address, 2)).to.equal("100");
+  });
+
+  it("Bob expense", async () => {
+    await protocol.registerExpense(
+      bob.address,
+      [alice.address, bob.address, charly.address],
+      300,
+      "Dinner"
+    );
+    expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
+      "100"
+    );
+    expect(await protocol.balanceOf(bob.address, 1), "Bob credit").to.equal(
+      "100"
+    );
+    expect(await protocol.balanceOf(bob.address, 2), "Bob dept").to.equal("0");
+    expect(await protocol.balanceOf(charly.address, 2)).to.equal("200");
+  });
+
+  it("Charly expense", async () => {
+    await protocol.registerExpense(
+      charly.address,
+      [alice.address, bob.address, charly.address],
+      300,
+      "Dinner"
+    );
+    expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
+      "0"
+    );
+    expect(await protocol.balanceOf(bob.address, 1), "Bob credit").to.equal(
+      "0"
+    );
+    expect(
+      await protocol.balanceOf(charly.address, 1),
+      "Charly credit"
+    ).to.equal("0");
+
+    expect(await protocol.balanceOf(alice.address, 2), "Alice credit").to.equal(
+      "0"
+    );
+    expect(await protocol.balanceOf(bob.address, 2), "Bob dept").to.equal("0");
+    expect(await protocol.balanceOf(charly.address, 2), "Charly dept").to.equal(
+      "0"
+    );
   });
 });
