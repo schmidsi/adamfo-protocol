@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "typechain": "hardhat typechain"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
