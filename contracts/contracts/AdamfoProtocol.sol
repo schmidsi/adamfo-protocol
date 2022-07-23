@@ -86,4 +86,39 @@ contract AdamfoProtocol is ERC1155 {
         require(msg.value <= balanceOf(member, DEPT), "Cannot overpay");
         _burn(member, DEPT, msg.value);
     }
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) public override {
+        require(
+            from == _msgSender() || isApprovedForAll(from, _msgSender()),
+            "ERC1155: caller is not token owner nor approved"
+        );
+        require(id != DEPT, "ERC1155: cannot transfer dept");
+        _safeTransferFrom(from, to, id, amount, data);
+    }
+
+    /**
+     * @dev See {IERC1155-safeBatchTransferFrom}.
+     */
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) public override {
+        require(
+            from == _msgSender() || isApprovedForAll(from, _msgSender()),
+            "ERC1155: caller is not token owner nor approved"
+        );
+        for (uint i = 0; i < ids.length; i++) {
+            require(ids[i] != DEPT, "ERC1155: cannot transfer dept");
+        }
+        _safeBatchTransferFrom(from, to, ids, amounts, data);
+    }
 }
