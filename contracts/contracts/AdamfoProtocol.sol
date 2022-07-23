@@ -6,7 +6,19 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 // Import this file to use console.log
 import "hardhat/console.sol";
 
-contract AdamfoProtocol is ERC1155 {
+contract AdamfoProtocol {
+    event PoolCreated(address childAddress, address[] members, uint id);
+
+    uint public pools = 0;
+
+    function createPool(address[] memory members) external {
+        AdamfoPool pool = new AdamfoPool(members, pools);
+        emit PoolCreated(address(pool), members, pools);
+        pools = pools + 1;
+    }
+}
+
+contract AdamfoPool is ERC1155 {
     uint256 public constant MEMBER_TOKEN = 0;
     uint256 public constant CREDIT = 1;
     uint256 public constant DEPT = 2;
@@ -20,8 +32,16 @@ contract AdamfoProtocol is ERC1155 {
 
     // The rest are NFTs
 
-    constructor(address[] memory members)
-        ERC1155("https://adamfo.xyz/api/item/{id}.json")
+    constructor(address[] memory members, uint poolId)
+        ERC1155(
+            string(
+                abi.encodePacked(
+                    "https://adamfo.xyz/api/pool/",
+                    poolId,
+                    "/item/{id}.json"
+                )
+            )
+        )
     {
         for (uint i = 0; i < members.length; i++) {
             _mint(members[i], MEMBER_TOKEN, 1, "");
