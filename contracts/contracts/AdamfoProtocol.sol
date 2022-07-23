@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "hardhat/console.sol";
 
 contract AdamfoProtocol {
-    event PoolCreated(address childAddress, address[] members, uint id);
+    event PoolCreated(address childAddress, address[] members, uint identifier);
 
     uint public pools = 0;
 
@@ -24,11 +24,13 @@ contract AdamfoPool is ERC1155 {
     uint256 public constant DEPT = 2;
 
     event RegisterExpense(
-        address lender,
+        address payer,
         address[] participants,
         uint256 amount,
         string description
     );
+
+    event PayBack(address lender, uint256 amount);
 
     constructor(address[] memory members, uint poolId)
         ERC1155(
@@ -106,6 +108,7 @@ contract AdamfoPool is ERC1155 {
         // Possible extension: Overpay
         require(msg.value <= balanceOf(msg.sender, DEPT), "Cannot overpay");
         _burn(msg.sender, DEPT, msg.value);
+        emit PayBack(msg.sender, msg.value);
     }
 
     function withdraw(uint256 amount) public payable {
