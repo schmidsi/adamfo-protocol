@@ -4,7 +4,7 @@ import { useSigner } from "wagmi";
 const useAdamfoProtocol = () => {
   const { data: signer, isError, isLoading } = useSigner();
 
-  console.log(signer, isError, isLoading);
+  // console.log(signer, isError, isLoading);
 
   if (signer) {
     const protocol = AdamfoProtocol__factory.connect(
@@ -12,7 +12,7 @@ const useAdamfoProtocol = () => {
       signer
     );
 
-    console.log(signer);
+    console.log({ signer });
 
     return protocol;
   }

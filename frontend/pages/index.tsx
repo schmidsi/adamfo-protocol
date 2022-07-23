@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import styles from "../styles/Home.module.css";
 
-const Connect = dynamic(() => import("../components/Connect"), {
+const CreatePool = dynamic(() => import("../components/CreatePool"), {
   ssr: false,
 });
 
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         <p className={styles.description}>Fun with money and frens</p>
 
         <div>
-          <Connect />
+          <CreatePool />
         </div>
       </main>
 
