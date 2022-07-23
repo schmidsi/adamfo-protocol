@@ -29,11 +29,11 @@ contract AdamfoProtocol is ERC1155 {
     }
 
     function registerExpense(
-        address payer,
         address[] memory participants,
         uint256 amount,
         string memory description
     ) public {
+        address payer = msg.sender;
         require(balanceOf(payer, MEMBER_TOKEN) >= 1, "Payer must be member");
         require(participants.length >= 1, "Participants must be at least one");
 
@@ -79,12 +79,35 @@ contract AdamfoProtocol is ERC1155 {
         emit RegisterExpense(payer, participants, amount, description);
     }
 
-    function payBack(address member) public payable {
-        require(balanceOf(member, MEMBER_TOKEN) >= 1, "Must be (for) a member");
+    function payBack() public payable {
+        require(
+            balanceOf(msg.sender, MEMBER_TOKEN) >= 1,
+            "Must be (for) a member"
+        );
         require(msg.value > 0, "Must pay back debt");
         // Possible extension: Overpay
-        require(msg.value <= balanceOf(member, DEPT), "Cannot overpay");
-        _burn(member, DEPT, msg.value);
+        require(msg.value <= balanceOf(msg.sender, DEPT), "Cannot overpay");
+        _burn(msg.sender, DEPT, msg.value);
+    }
+
+    function withdraw(uint256 amount) public payable {
+        require(
+            balanceOf(msg.sender, MEMBER_TOKEN) >= 1,
+            "Must be (for) a member"
+        );
+        require(
+            amount <= balanceOf(msg.sender, CREDIT),
+            "Cannot withdraw more than you have"
+        );
+        uint256 balance = address(this).balance;
+
+        if (balance > amount) {
+            _burn(msg.sender, CREDIT, amount);
+            payable(msg.sender).transfer(amount);
+        } else {
+            _burn(msg.sender, CREDIT, balance);
+            payable(msg.sender).transfer(balance);
+        }
     }
 
     function safeTransferFrom(

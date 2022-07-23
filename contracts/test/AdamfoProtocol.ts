@@ -28,24 +28,26 @@ describe("AdamfoProtocol walkthrough", function () {
   });
 
   it("Alice expense", async () => {
-    await protocol.registerExpense(
-      alice.address,
-      [alice.address, bob.address, charly.address],
-      300,
-      "Dinner"
-    );
+    await protocol
+      .connect(alice)
+      .registerExpense(
+        [alice.address, bob.address, charly.address],
+        300,
+        "Dinner"
+      );
     expect(await protocol.balanceOf(alice.address, 1)).to.equal("200");
     expect(await protocol.balanceOf(bob.address, 2)).to.equal("100");
     expect(await protocol.balanceOf(charly.address, 2)).to.equal("100");
   });
 
   it("Bob expense", async () => {
-    await protocol.registerExpense(
-      bob.address,
-      [alice.address, bob.address, charly.address],
-      300,
-      "Dinner"
-    );
+    await protocol
+      .connect(bob)
+      .registerExpense(
+        [alice.address, bob.address, charly.address],
+        300,
+        "Dinner"
+      );
     expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
       "100"
     );
@@ -99,12 +101,13 @@ describe("AdamfoProtocol walkthrough", function () {
   });
 
   it("Charly expense", async () => {
-    await protocol.registerExpense(
-      charly.address,
-      [alice.address, bob.address, charly.address],
-      300,
-      "Dinner"
-    );
+    await protocol
+      .connect(charly)
+      .registerExpense(
+        [alice.address, bob.address, charly.address],
+        300,
+        "Dinner"
+      );
     expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
       "0"
     );
@@ -122,6 +125,46 @@ describe("AdamfoProtocol walkthrough", function () {
     expect(await protocol.balanceOf(bob.address, 2), "Bob dept").to.equal("0");
     expect(await protocol.balanceOf(charly.address, 2), "Charly dept").to.equal(
       "0"
+    );
+  });
+
+  it("More complex example", async () => {
+    await protocol
+      .connect(alice)
+      .registerExpense(
+        [alice.address, bob.address, charly.address],
+        300,
+        "Something"
+      );
+    await protocol
+      .connect(bob)
+      .registerExpense([bob.address, charly.address], 600, "Something");
+    expect(await protocol.balanceOf(bob.address, 1), "Bob credit").to.equal(
+      "200"
+    );
+    expect(await protocol.balanceOf(charly.address, 2), "Charly debt").to.equal(
+      "400"
+    );
+    await protocol
+      .connect(charly)
+      .registerExpense([alice.address, charly.address], 360, "Something");
+    expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
+      "20"
+    );
+    expect(await protocol.balanceOf(charly.address, 2), "Charly debt").to.equal(
+      "220"
+    );
+  });
+
+  it("Payback and withdraw", async () => {
+    await protocol.connect(charly).payBack({ value: 210 });
+    expect(await protocol.balanceOf(charly.address, 2), "Charly debt").to.equal(
+      "10"
+    );
+
+    await protocol.connect(alice).withdraw("10");
+    expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
+      "10"
     );
   });
 });
