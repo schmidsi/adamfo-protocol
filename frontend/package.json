@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "adamfo-wallet-contracts": "../contracts",
     "ethers": "^5.6.9",
     "next": "12.2.3",
+    "next-transpile-modules": "^9.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "wagmi": "^0.5.11"
