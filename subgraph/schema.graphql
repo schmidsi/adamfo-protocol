@@ -1,0 +1,36 @@
+type PoolCreated @entity {
+  id: ID!
+  childAddress: Bytes! # address
+  members: [Bytes!]! # address[]
+}
+
+type RegisterExpense @entity {
+  id: ID!
+  lender: Bytes! # address
+  participants: [Bytes!]! # address[]
+  amount: BigInt! # uint256
+  description: String! # string
+}
+
+type TransferBatch @entity {
+  id: ID!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  ids: [BigInt!]! # uint256[]
+  values: [BigInt!]! # uint256[]
+}
+
+type TransferSingle @entity {
+  id: ID!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  id: BigInt! # uint256
+  value: BigInt! # uint256
+}
+
+type URI @entity {
+  id: ID!
+  value: String! # string
+}

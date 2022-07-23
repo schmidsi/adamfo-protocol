@@ -1,0 +1,52 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: AdamfoProtocol
+    network: mumbai
+    source:
+      address: "0xA91E2aFBf2e15af7647A26A6e45C58b04f2E6303"
+      abi: AdamfoProtocol
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - PoolCreated
+      abis:
+        - name: AdamfoProtocol
+          file: ./abis/AdamfoProtocol.json
+      eventHandlers:
+        - event: PoolCreated(address,address[],uint256)
+          handler: handlePoolCreated
+      file: ./src/mappings.ts
+templates:
+  - kind: ethereum
+    name: AdamfoPool
+    network: mumbai
+    source:
+      abi: AdamfoPool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ApprovalForAll
+        - RegisterExpense
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: AdamfoPool
+          file: ./abis/AdamfoPool.json
+      eventHandlers:
+        - event: RegisterExpense(address,address[],uint256,string)
+          handler: handleRegisterExpense
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: ./src/mappings.ts
