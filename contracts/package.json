@@ -2,7 +2,7 @@
   "name": "adamfo-wallet-contracts",
   "version": "0.0.1",
   "description": "Smart Contracts for the Adamfo Wallet Protocol",
-  "main": "index.js",
+  "main": "index.ts",
   "author": "Simon Emanuel Schmid <simon@schmid.io>",
   "license": "MIT",
   "private": true,
