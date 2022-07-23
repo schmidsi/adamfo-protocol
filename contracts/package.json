@@ -6,6 +6,9 @@
   "author": "Simon Emanuel Schmid <simon@schmid.io>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "hardhat test"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
     "@ethersproject/providers": "^5.4.7",
