@@ -125,9 +125,6 @@ contract AdamfoProtocol is ERC1155 {
         _safeTransferFrom(from, to, id, amount, data);
     }
 
-    /**
-     * @dev See {IERC1155-safeBatchTransferFrom}.
-     */
     function safeBatchTransferFrom(
         address from,
         address to,
@@ -143,5 +140,30 @@ contract AdamfoProtocol is ERC1155 {
             require(ids[i] != DEPT, "ERC1155: cannot transfer dept");
         }
         _safeBatchTransferFrom(from, to, ids, amounts, data);
+    }
+
+    function _afterTokenTransfer(
+        address,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory
+    ) internal override {
+        for (uint i = 0; i < ids.length; i++) {
+            if (ids[i] == CREDIT && from != address(0) && to != address(0)) {
+                uint256 receiverDept = balanceOf(to, DEPT);
+
+                if (receiverDept > 0) {
+                    if (amounts[i] > receiverDept) {
+                        _burn(to, DEPT, receiverDept);
+                        _mint(to, CREDIT, amounts[i] - receiverDept, "");
+                    } else {
+                        _burn(to, DEPT, amounts[i]);
+                        _burn(to, CREDIT, amounts[i]);
+                    }
+                }
+            }
+        }
     }
 }

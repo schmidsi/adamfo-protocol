@@ -2,6 +2,7 @@ import { ethers } from "hardhat";
 import { expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { AdamfoProtocol } from "../typechain-types";
+import { isGeneratorFunction } from "util/types";
 
 describe("AdamfoProtocol walkthrough", function () {
   let alice: SignerWithAddress,
@@ -166,5 +167,25 @@ describe("AdamfoProtocol walkthrough", function () {
     expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
       "10"
     );
+  });
+
+  it("Peer 2 peer settlement", async () => {
+    await protocol
+      .connect(alice)
+      .safeTransferFrom(alice.address, charly.address, 1, 8, "0x00");
+
+    expect(await protocol.balanceOf(alice.address, 1), "Alice credit").to.equal(
+      "2"
+    );
+    expect(await protocol.balanceOf(alice.address, 2), "Alice debt").to.equal(
+      "0"
+    );
+    expect(await protocol.balanceOf(charly.address, 2), "Charly debt").to.equal(
+      "2"
+    );
+    expect(
+      await protocol.balanceOf(charly.address, 1),
+      "Charly credit"
+    ).to.equal("0");
   });
 });
