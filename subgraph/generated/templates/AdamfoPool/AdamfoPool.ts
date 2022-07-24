@@ -36,6 +36,54 @@ export class ApprovalForAll__Params {
   }
 }
 
+export class PayBack extends ethereum.Event {
+  get params(): PayBack__Params {
+    return new PayBack__Params(this);
+  }
+}
+
+export class PayBack__Params {
+  _event: PayBack;
+
+  constructor(event: PayBack) {
+    this._event = event;
+  }
+
+  get lender(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class Peer2PeerSettlement extends ethereum.Event {
+  get params(): Peer2PeerSettlement__Params {
+    return new Peer2PeerSettlement__Params(this);
+  }
+}
+
+export class Peer2PeerSettlement__Params {
+  _event: Peer2PeerSettlement;
+
+  constructor(event: Peer2PeerSettlement) {
+    this._event = event;
+  }
+
+  get sender(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get receiver(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
 export class RegisterExpense extends ethereum.Event {
   get params(): RegisterExpense__Params {
     return new RegisterExpense__Params(this);
@@ -49,7 +97,7 @@ export class RegisterExpense__Params {
     this._event = event;
   }
 
-  get lender(): Address {
+  get payer(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 

@@ -31,7 +31,7 @@ export class PoolCreated__Params {
     return this._event.parameters[1].value.toAddressArray();
   }
 
-  get id(): BigInt {
+  get identifier(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }

@@ -1,2 +1,4 @@
 node_modules
 subgraph/data
+subgraph/generated
+subgraph/build

@@ -6,7 +6,7 @@ type PoolCreated @entity {
 
 type RegisterExpense @entity {
   id: ID!
-  lender: Bytes! # address
+  payer: Bytes! # address
   participants: [Bytes!]! # address[]
   amount: BigInt! # uint256
   description: String! # string
@@ -26,7 +26,6 @@ type TransferSingle @entity {
   operator: Bytes! # address
   from: Bytes! # address
   to: Bytes! # address
-  id: BigInt! # uint256
   value: BigInt! # uint256
 }
 

@@ -1,3 +1,4 @@
+import { Bytes } from "@graphprotocol/graph-ts";
 import { PoolCreated as PoolCreatedEvent } from "../generated/AdamfoProtocol/AdamfoProtocol";
 import {
   RegisterExpense as RegisterExpenseEvent,
@@ -18,7 +19,7 @@ export function handlePoolCreated(event: PoolCreatedEvent): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
   entity.childAddress = event.params.childAddress;
-  entity.members = event.params.members;
+  entity.members = changetype<Bytes[]>(event.params.members);
   entity.save();
 }
 
@@ -26,8 +27,10 @@ export function handleRegisterExpense(event: RegisterExpenseEvent): void {
   let entity = new RegisterExpense(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
-  entity.lender = event.params.lender;
-  entity.participants = event.params.participants;
+  entity.payer = event.transaction.from;
+  entity.participants = event.params.participants.map<Bytes>(
+    participant => participant as Bytes
+  );
   entity.amount = event.params.amount;
   entity.description = event.params.description;
   entity.save();

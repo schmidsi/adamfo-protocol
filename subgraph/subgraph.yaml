@@ -6,8 +6,9 @@ dataSources:
     name: AdamfoProtocol
     network: mumbai
     source:
-      address: "0xA91E2aFBf2e15af7647A26A6e45C58b04f2E6303"
       abi: AdamfoProtocol
+      address: "0x61d56F028CFf831E77223Fba24E1bCF74Aed311e"
+      startBlock: 27309873
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -43,9 +44,11 @@ templates:
       eventHandlers:
         - event: RegisterExpense(address,address[],uint256,string)
           handler: handleRegisterExpense
-        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+        - event: TransferBatch(indexed address,indexed address,indexed
+            address,uint256[],uint256[])
           handler: handleTransferBatch
-        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+        - event: TransferSingle(indexed address,indexed address,indexed
+            address,uint256,uint256)
           handler: handleTransferSingle
         - event: URI(string,indexed uint256)
           handler: handleURI

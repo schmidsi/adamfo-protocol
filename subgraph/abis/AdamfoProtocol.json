@@ -17,7 +17,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "id",
+        "name": "identifier",
         "type": "uint256"
       }
     ],
@@ -26,7 +26,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address[]", "name": "members", "type": "address[]" }
+      {
+        "internalType": "address[]",
+        "name": "members",
+        "type": "address[]"
+      }
     ],
     "name": "createPool",
     "outputs": [],
@@ -36,7 +40,13 @@
   {
     "inputs": [],
     "name": "pools",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   }

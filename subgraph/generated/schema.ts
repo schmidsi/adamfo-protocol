@@ -92,13 +92,13 @@ export class RegisterExpense extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get lender(): Bytes {
-    let value = this.get("lender");
+  get payer(): Bytes {
+    let value = this.get("payer");
     return value!.toBytes();
   }
 
-  set lender(value: Bytes) {
-    this.set("lender", Value.fromBytes(value));
+  set payer(value: Bytes) {
+    this.set("payer", Value.fromBytes(value));
   }
 
   get participants(): Array<Bytes> {
@@ -262,15 +262,6 @@ export class TransferSingle extends Entity {
 
   set to(value: Bytes) {
     this.set("to", Value.fromBytes(value));
-  }
-
-  get id(): BigInt {
-    let value = this.get("id");
-    return value!.toBigInt();
-  }
-
-  set id(value: BigInt) {
-    this.set("id", Value.fromBigInt(value));
   }
 
   get value(): BigInt {
