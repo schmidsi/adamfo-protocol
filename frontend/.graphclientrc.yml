@@ -1,0 +1,5 @@
+sources:
+  - name: localhost
+    handler:
+      graphql:
+        endpoint: http://localhost:8000/subgraphs/name/schmidsi/adamfo-wallet
