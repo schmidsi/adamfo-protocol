@@ -5,9 +5,9 @@ import { useGetPools } from "../hooks/useGetPools";
 import Connect from "./Connect";
 
 const Pools = () => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
 
-  const { pools, loading } = useGetPools(address);
+  const { pools, loading } = useGetPools();
 
   return loading ? (
     <div>Loading ...</div>

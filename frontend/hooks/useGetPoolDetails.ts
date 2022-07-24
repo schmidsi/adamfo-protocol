@@ -1,13 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 
-export const useGetPools = () => {
+export const useGetPoolDetails = (id: string) => {
   const { loading, error, data } = useQuery(
     gql`
-      query GetPools {
-        pools {
+      query GetPool($id: String!) {
+        pool(id: $id) {
           id
           members
           poolFrens {
+            id
             deptCredit
             fren {
               id
@@ -17,11 +18,11 @@ export const useGetPools = () => {
       }
     `,
     {
-      // variables: { address },
+      variables: { id },
     }
   );
 
-  const pools = data?.pools || [];
+  const poolDetails = data?.pool;
 
-  return { loading, error, pools };
+  return { loading, error, poolDetails };
 };
