@@ -10,5 +10,11 @@
       "address": "0x327811d200D56cCeb7b3EA241B8434d719bB23aE",
       "startBlock": 14197432
     }
+  },
+  "xdai": {
+    "AdamfoProtocol": {
+      "address": "0xF28F804060e9D785197CA12C26B46384928fae15",
+      "startBlock": 23331373
+    }
   }
 }

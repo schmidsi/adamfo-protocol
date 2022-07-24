@@ -18,6 +18,12 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       chainId: 42220,
     },
+    xdai: {
+      url: "https://rpc.gnosischain.com",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      chainId: 100,
+    },
   },
 };
 
