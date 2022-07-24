@@ -22,5 +22,11 @@
       "address": "0xE6EFb17f11d1B1aFFb34bAeb4C228Bd351292c41",
       "startBlock": 31082648
     }
+  },
+  "localhost": {
+    "AdamfoProtocol": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "startBlock": 1
+    }
   }
 }

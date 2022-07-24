@@ -10,7 +10,7 @@
     "deploy:polygon": "graph build --network matic && graph deploy --node https://api.thegraph.com/deploy/ schmidsi/adamfo-polygon",
     "create-local": "graph create --node http://localhost:8020/ schmidsi/adamfo-wallet",
     "remove-local": "graph remove --node http://localhost:8020/ schmidsi/adamfo-wallet",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 schmidsi/adamfo-wallet",
+    "deploy-local": "graph build --network localhost && graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 schmidsi/adamfo-wallet",
     "test": "graph test"
   },
   "dependencies": {

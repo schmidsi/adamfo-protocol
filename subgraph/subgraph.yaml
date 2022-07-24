@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: AdamfoProtocol
-    network: matic
+    network: localhost
     source:
       abi: AdamfoProtocol
-      address: "0xE6EFb17f11d1B1aFFb34bAeb4C228Bd351292c41"
-      startBlock: 31082648
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -25,7 +25,7 @@ dataSources:
 templates:
   - kind: ethereum
     name: AdamfoPool
-    network: matic
+    network: localhost
     source:
       abi: AdamfoPool
     mapping:

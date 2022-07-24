@@ -9,7 +9,8 @@
   "scripts": {
     "test": "hardhat test",
     "typechain": "hardhat typechain",
-    "deploy": "hardhat run scripts/deploy.ts"
+    "deploy": "hardhat run scripts/deploy.ts",
+    "localnode": "hardhat node"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
