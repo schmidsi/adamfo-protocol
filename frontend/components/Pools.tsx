@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useAccount } from "wagmi";
 import useAdamfoProtocol from "../hooks/useAdamfoProtocol";
 import { useGetPools } from "../hooks/useGetPools";
@@ -13,7 +14,11 @@ const Pools = () => {
   ) : (
     <div>
       {pools.map((pool) => (
-        <div key={pool.id}>{pool.id}</div>
+        <div key={pool.id}>
+          <Link href={`/pool/${pool.id}`}>
+            <a href="">{pool.id}</a>
+          </Link>
+        </div>
       ))}
     </div>
   );
