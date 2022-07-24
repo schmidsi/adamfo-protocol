@@ -13,13 +13,13 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Adamfo Wallet</title>
+        <title>adamfoɔ protocol</title>
         <meta name="description" content="Fun with money and frens" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Adamfo Wallet</h1>
+        <h1 className={styles.title}>adamfoɔ protocol</h1>
 
         <p className={styles.description}>Fun with money and frens</p>
 
