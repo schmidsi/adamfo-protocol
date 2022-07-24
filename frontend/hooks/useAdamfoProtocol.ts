@@ -2,17 +2,7 @@ import { AdamfoProtocol__factory } from "adamfo-wallet-contracts";
 import { useSigner, useNetwork } from "wagmi";
 
 import * as networks from "../networks.json";
-
-const CHAIN_ID_TO_NAME = {
-  1: "mainnet",
-  4: "rinkeby",
-  5: "goerli",
-  80001: "mumbai",
-  42220: "celo",
-  31337: "localhost",
-  100: "xdai",
-  137: "matic",
-};
+import { getChainName } from "../utils/getChainName";
 
 const useAdamfoProtocol = () => {
   const { data: signer, isError, isLoading } = useSigner();
@@ -20,7 +10,7 @@ const useAdamfoProtocol = () => {
 
   console.log({ chain, chains });
 
-  const chainName = chain?.id ? CHAIN_ID_TO_NAME[chain.id] : "unknown";
+  const chainName = getChainName(chain?.id || 0);
 
   // console.log(signer, isError, isLoading);
 

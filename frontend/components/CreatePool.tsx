@@ -1,11 +1,15 @@
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import useAdamfoProtocol from "../hooks/useAdamfoProtocol";
+import { getChainName } from "../utils/getChainName";
 import Connect from "./Connect";
 
 const CreatePool = () => {
   const { address, isConnected } = useAccount();
+  const { chain, chains } = useNetwork();
 
   const adamfoProtocol = useAdamfoProtocol();
+
+  const chainName = getChainName(chain?.id || 0);
 
   const createPool = async () => {
     const tx = await adamfoProtocol!.createPool([
@@ -20,6 +24,9 @@ const CreatePool = () => {
     <Connect></Connect>
   ) : (
     <div>
+      <div>
+        {chainName} ({chain.id})
+      </div>
       <button onClick={() => createPool()}>Create Pool</button>
     </div>
   );
