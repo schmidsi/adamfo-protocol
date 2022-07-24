@@ -15,7 +15,7 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: new HttpLink({
-      uri: "https://api.thegraph.com/subgraphs/name/schmidsi/adamfo-polygon",
+      uri: "https://api.thegraph.com/subgraphs/name/schmidsi/adamfo-mumbai",
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
