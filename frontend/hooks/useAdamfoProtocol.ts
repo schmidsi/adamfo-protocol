@@ -1,5 +1,7 @@
-import { AdamfoProtocol__factory, networks } from "adamfo-wallet-contracts";
+import { AdamfoProtocol__factory } from "adamfo-wallet-contracts";
 import { useSigner } from "wagmi";
+
+import * as networks from "../networks.json";
 
 const useAdamfoProtocol = () => {
   const { data: signer, isError, isLoading } = useSigner();

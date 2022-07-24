@@ -1,4 +1,4 @@
-import { AdamfoPool__factory, networks } from "adamfo-wallet-contracts";
+import { AdamfoPool__factory } from "adamfo-wallet-contracts";
 import { useSigner } from "wagmi";
 
 const useAdamfoPool = (address: string) => {

@@ -33,10 +33,10 @@ async function main() {
     `../subgraph/networks.json`,
     JSON.stringify(newAddresses, null, 2)
   );
-  // fs.writeFileSync(
-  //   `../frontend/networks.json`,
-  //   JSON.stringify(newAddresses, null, 2)
-  // );
+  fs.writeFileSync(
+    `../frontend/networks.json`,
+    JSON.stringify(newAddresses, null, 2)
+  );
 
   console.log(
     "AdamfoProtocol deployed to:",
