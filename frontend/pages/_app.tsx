@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { ApolloProvider } from "@apollo/client";
 import { WagmiConfig, createClient } from "wagmi";
 import { getDefaultProvider } from "ethers";
@@ -16,6 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
+      <Head>
+        <title>adamfoɔ protocol</title>
+        <meta name="description" content="Fun with money and frens" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <WagmiConfig client={client}>
         <Component {...pageProps} />
       </WagmiConfig>

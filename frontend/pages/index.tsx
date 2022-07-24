@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import styles from "../styles/Home.module.css";
 import Pools from "../components/Pools";
+
+import styles from "../styles/Home.module.css";
 
 const CreatePool = dynamic(() => import("../components/CreatePool"), {
   ssr: false,
@@ -12,12 +12,6 @@ const CreatePool = dynamic(() => import("../components/CreatePool"), {
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>adamfoɔ protocol</title>
-        <meta name="description" content="Fun with money and frens" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.main}>
         <h1 className={styles.title}>adamfoɔ protocol</h1>
 
