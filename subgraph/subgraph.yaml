@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: AdamfoProtocol
-    network: mumbai
+    network: celo
     source:
       abi: AdamfoProtocol
-      address: "0x61d56F028CFf831E77223Fba24E1bCF74Aed311e"
-      startBlock: 27309873
+      address: "0x327811d200D56cCeb7b3EA241B8434d719bB23aE"
+      startBlock: 14197432
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -25,7 +25,7 @@ dataSources:
 templates:
   - kind: ethereum
     name: AdamfoPool
-    network: mumbai
+    network: celo
     source:
       abi: AdamfoPool
     mapping:
