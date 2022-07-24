@@ -33,3 +33,23 @@ type URI @entity {
   id: ID!
   value: String! # string
 }
+
+type Pool @entity {
+  id: Bytes!
+  totalDeptCredit: BigInt!
+  members: [Bytes!]!
+  poolFrens: [PoolFren!]! @derivedFrom(field: "pool")
+}
+
+type PoolFren @entity {
+  id: Bytes!
+  pool: Pool!
+  fren: Fren!
+  deptCredit: BigInt!
+}
+
+type Fren @entity {
+  id: Bytes!
+  poolFrens: [PoolFren!]! @derivedFrom(field: "fren")
+  totalDeptCredit: BigInt!
+}

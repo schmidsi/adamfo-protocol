@@ -1,4 +1,4 @@
-import { Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { PoolCreated as PoolCreatedEvent } from "../generated/AdamfoProtocol/AdamfoProtocol";
 import {
   RegisterExpense as RegisterExpenseEvent,
@@ -11,8 +11,21 @@ import {
   TransferBatch,
   TransferSingle,
   URI,
-  PoolCreated
+  PoolCreated,
+  Pool,
+  Fren,
+  PoolFren
 } from "../generated/schema";
+
+function getOrCreateFren(address: Bytes): Fren {
+  let fren = Fren.load(address);
+  if (fren == null) {
+    fren = new Fren(address);
+    fren.totalDeptCredit = BigInt.fromI32(0);
+    fren.save();
+  }
+  return fren;
+}
 
 export function handlePoolCreated(event: PoolCreatedEvent): void {
   let entity = new PoolCreated(
@@ -21,6 +34,20 @@ export function handlePoolCreated(event: PoolCreatedEvent): void {
   entity.childAddress = event.params.childAddress;
   entity.members = changetype<Bytes[]>(event.params.members);
   entity.save();
+
+  let pool = new Pool(entity.childAddress);
+  pool.totalDeptCredit = BigInt.fromI32(0);
+  pool.members = changetype<Bytes[]>(event.params.members);
+  pool.save();
+
+  for (let i = 0; i < event.params.members.length; i++) {
+    let fren = getOrCreateFren(event.params.members[i]);
+    let poolFren = new PoolFren(pool.id.concat(event.params.members[i]));
+    poolFren.pool = pool.id;
+    poolFren.fren = fren.id;
+    poolFren.deptCredit = BigInt.fromI32(0);
+    poolFren.save();
+  }
 }
 
 export function handleRegisterExpense(event: RegisterExpenseEvent): void {

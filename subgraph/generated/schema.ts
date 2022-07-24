@@ -314,3 +314,171 @@ export class URI extends Entity {
     this.set("value", Value.fromString(value));
   }
 }
+
+export class Pool extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Pool entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type Pool must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Pool", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): Pool | null {
+    return changetype<Pool | null>(store.get("Pool", id.toHexString()));
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    return value!.toBytes();
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get totalDeptCredit(): BigInt {
+    let value = this.get("totalDeptCredit");
+    return value!.toBigInt();
+  }
+
+  set totalDeptCredit(value: BigInt) {
+    this.set("totalDeptCredit", Value.fromBigInt(value));
+  }
+
+  get members(): Array<Bytes> {
+    let value = this.get("members");
+    return value!.toBytesArray();
+  }
+
+  set members(value: Array<Bytes>) {
+    this.set("members", Value.fromBytesArray(value));
+  }
+
+  get poolFrens(): Array<Bytes> {
+    let value = this.get("poolFrens");
+    return value!.toBytesArray();
+  }
+
+  set poolFrens(value: Array<Bytes>) {
+    this.set("poolFrens", Value.fromBytesArray(value));
+  }
+}
+
+export class PoolFren extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolFren entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type PoolFren must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolFren", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): PoolFren | null {
+    return changetype<PoolFren | null>(store.get("PoolFren", id.toHexString()));
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    return value!.toBytes();
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get pool(): Bytes {
+    let value = this.get("pool");
+    return value!.toBytes();
+  }
+
+  set pool(value: Bytes) {
+    this.set("pool", Value.fromBytes(value));
+  }
+
+  get fren(): Bytes {
+    let value = this.get("fren");
+    return value!.toBytes();
+  }
+
+  set fren(value: Bytes) {
+    this.set("fren", Value.fromBytes(value));
+  }
+
+  get deptCredit(): BigInt {
+    let value = this.get("deptCredit");
+    return value!.toBigInt();
+  }
+
+  set deptCredit(value: BigInt) {
+    this.set("deptCredit", Value.fromBigInt(value));
+  }
+}
+
+export class Fren extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Fren entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type Fren must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Fren", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): Fren | null {
+    return changetype<Fren | null>(store.get("Fren", id.toHexString()));
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    return value!.toBytes();
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get poolFrens(): Array<Bytes> {
+    let value = this.get("poolFrens");
+    return value!.toBytesArray();
+  }
+
+  set poolFrens(value: Array<Bytes>) {
+    this.set("poolFrens", Value.fromBytesArray(value));
+  }
+
+  get totalDeptCredit(): BigInt {
+    let value = this.get("totalDeptCredit");
+    return value!.toBigInt();
+  }
+
+  set totalDeptCredit(value: BigInt) {
+    this.set("totalDeptCredit", Value.fromBigInt(value));
+  }
+}
