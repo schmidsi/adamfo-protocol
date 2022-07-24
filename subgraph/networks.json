@@ -1,7 +1,8 @@
 {
   "mumbai": {
     "AdamfoProtocol": {
-      "address": "0xA91E2aFBf2e15af7647A26A6e45C58b04f2E6303"
+      "address": "0x61d56F028CFf831E77223Fba24E1bCF74Aed311e",
+      "startBlock": null
     }
   }
 }

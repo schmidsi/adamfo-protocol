@@ -29,14 +29,14 @@ async function main() {
   };
 
   fs.writeFileSync(`./networks.json`, JSON.stringify(newAddresses, null, 2));
-  // fs.writeFileSync(
-  //   `../subgraph/networks.json`,
-  //   JSON.stringify(newAddresses, null, 2)
-  // );
   fs.writeFileSync(
-    `../frontend/networks.json`,
+    `../subgraph/networks.json`,
     JSON.stringify(newAddresses, null, 2)
   );
+  // fs.writeFileSync(
+  //   `../frontend/networks.json`,
+  //   JSON.stringify(newAddresses, null, 2)
+  // );
 
   console.log(
     "AdamfoProtocol deployed to:",

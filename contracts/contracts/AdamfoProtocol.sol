@@ -32,6 +32,8 @@ contract AdamfoPool is ERC1155 {
 
     event PayBack(address lender, uint256 amount);
 
+    event Peer2PeerSettlement(address sender, address receiver, uint256 amount);
+
     constructor(address[] memory members, uint poolId)
         ERC1155(
             string(
@@ -176,6 +178,8 @@ contract AdamfoPool is ERC1155 {
                 uint256 receiverDept = balanceOf(to, DEPT);
 
                 if (receiverDept > 0) {
+                    emit Peer2PeerSettlement(from, to, amounts[i]);
+
                     if (amounts[i] > receiverDept) {
                         _burn(to, DEPT, receiverDept);
                         _mint(to, CREDIT, amounts[i] - receiverDept, "");
