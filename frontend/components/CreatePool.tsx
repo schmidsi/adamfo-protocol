@@ -25,7 +25,7 @@ const CreatePool = () => {
   ) : (
     <div>
       <div>
-        {chainName} ({chain.id})
+        {chainName} ({chain?.id})
       </div>
       <button onClick={() => createPool()}>Create Pool</button>
     </div>
