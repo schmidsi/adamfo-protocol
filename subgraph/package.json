@@ -7,6 +7,7 @@
     "deploy:mumbai": "graph build --network mumbai && graph deploy --node https://api.thegraph.com/deploy/ schmidsi/adamfo-mumbai",
     "deploy:celo": "graph build --network celo && graph deploy --node https://api.thegraph.com/deploy/ schmidsi/adamfo-celo",
     "deploy:gnosis": "graph build --network xdai && graph deploy --node https://api.thegraph.com/deploy/ schmidsi/adamfo-gnosis",
+    "deploy:polygon": "graph build --network matic && graph deploy --node https://api.thegraph.com/deploy/ schmidsi/adamfo-polygon",
     "create-local": "graph create --node http://localhost:8020/ schmidsi/adamfo-wallet",
     "remove-local": "graph remove --node http://localhost:8020/ schmidsi/adamfo-wallet",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 schmidsi/adamfo-wallet",
