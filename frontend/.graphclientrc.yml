@@ -3,3 +3,15 @@ sources:
     handler:
       graphql:
         endpoint: http://localhost:8000/subgraphs/name/schmidsi/adamfo-wallet
+  - name: matic
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/schmidsi/adamfo-polygon
+  - name: xdai
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/schmidsi/adamfo-gnosis
+  - name: celo
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/schmidsi/adamfo-celo
