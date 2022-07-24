@@ -1,8 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-
+import { ApolloProvider } from "@apollo/client";
 import { WagmiConfig, createClient } from "wagmi";
 import { getDefaultProvider } from "ethers";
+
+import { useApollo } from "../hooks/useApollo";
 
 const client = createClient({
   autoConnect: true,
@@ -10,10 +12,14 @@ const client = createClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient = useApollo(pageProps);
+
   return (
-    <WagmiConfig client={client}>
-      <Component {...pageProps} />
-    </WagmiConfig>
+    <ApolloProvider client={apolloClient}>
+      <WagmiConfig client={client}>
+        <Component {...pageProps} />
+      </WagmiConfig>
+    </ApolloProvider>
   );
 }
 

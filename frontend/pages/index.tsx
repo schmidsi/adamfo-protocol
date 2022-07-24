@@ -3,6 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import styles from "../styles/Home.module.css";
+import Pools from "../components/Pools";
 
 const CreatePool = dynamic(() => import("../components/CreatePool"), {
   ssr: false,
@@ -24,6 +25,7 @@ const Home: NextPage = () => {
 
         <div>
           <CreatePool />
+          <Pools />
         </div>
       </main>
 
